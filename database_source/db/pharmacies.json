@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "city": "Mexico City",
+    "area": "Benito Juarez"
+  },
+  {
+    "id": 2,
+    "city": "Mexico City",
+    "area": "Santa Fe"
+  },
+  {
+    "id": 3,
+    "city": "Mexico City",
+    "area": "Huixquilucan"
+  },
+  {
+    "id": 4,
+    "city": "Mexico City",
+    "area": "Roma"
+  },
+  {
+    "id": 5,
+    "city": "Guadalajara",
+    "area": "Zapopan"
+  },
+  {
+    "id": 6,
+    "city": "Guadalajara",
+    "area": "Providencia"
+  },
+  {
+    "id": 7,
+    "city": "Guadalajara",
+    "area": "Tlaquepaque"
+  },
+  {
+    "id": 8,
+    "city": "Monterrey",
+    "area": "Guadalupe"
+  },
+  {
+    "id": 9,
+    "city": "Monterrey",
+    "area": "Centro"
+  },
+  {
+    "id": 10,
+    "city": "Monterrey",
+    "area": "Anahuac"
+  }
+]

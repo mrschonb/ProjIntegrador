@@ -1,0 +1,12 @@
+﻿id,city,area
+int,string,string
+1,Mexico City,Benito Juarez
+2,Mexico City,Santa Fe
+3,Mexico City,Huixquilucan
+4,Mexico City,Roma
+5,Guadalajara,Zapopan
+6,Guadalajara,Providencia
+7,Guadalajara,Tlaquepaque
+8,Monterrey,Guadalupe
+9,Monterrey,Centro
+10,Monterrey,Anahuac

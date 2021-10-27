@@ -1,0 +1,18 @@
+[
+	{
+		"id": "paul.atreides@arrakis.com",
+		"name": "Paul Atreides",
+		"email": "paul.atreides@arrakis.com",
+		"city": "Mexico City",
+		"area": "Benito Juarez",
+		"type": "customer"
+	},
+	{
+		"id" : "roland.deschaine@gilead.com",
+		"name": "Roland Deschaine",
+		"email": "roland.deschaine@gilead.com",
+		"city": "Guadalajara",
+		"area": "Zapopan",
+		"type": "pharmacist"
+	}
+]

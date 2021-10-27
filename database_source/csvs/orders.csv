@@ -1,0 +1,2 @@
+﻿id,user,pharmacy,order_datetime,sent_datetime,status
+int,string,string,string,string,string
