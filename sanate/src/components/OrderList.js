@@ -4,7 +4,7 @@ const OrderList = ({ orders }) => {
 	return (
 		<>
 			{orders.map((order) => (
-				<Order date={order.date} price={order.price} status={order.status} />
+				<Order key={order.id} date={order.date} price={order.price} status={order.status} />
 			))}
 		</>
 	)

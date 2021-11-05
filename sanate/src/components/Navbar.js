@@ -1,10 +1,14 @@
 import UserSettings from './UserSettings';
 
-const Navbar = () => {
+const Navbar = ({ changeView }) => {
 	return (
-		<div className="navbar">
-			<h2>Farmacias Sanate</h2> <h4>Navbar Opt 1</h4> <h4>Navbar Opt 2</h4> <h4>Navbar Opt 3</h4> <UserSettings />
-		</div>
+		<ul className="navbar">
+			<li><h3>Farmacias Sanate</h3></li> 
+			<li onClick={() => changeView("products")} >Browse items</li> 
+			<li onClick={()=> changeView("orders")} >View orders</li> 
+			<li onClick={()=> changeView("cart")} >View cart</li> 
+			<li><UserSettings /></li>
+		</ul>
 	)
 }
 
