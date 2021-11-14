@@ -1,8 +1,8 @@
-const UserSettings = () => {
+const UserSettings = ({user}) => {
 	return (
 		<div className="user-settings">
 		<h5>
-			User Name Here
+			{"Welcome, "+user.name+"!"}
 		</h5>
 		</div>
 	)

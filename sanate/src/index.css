@@ -9,14 +9,21 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 .navbar {
-  background-color: #3aa832;
   text-align: left;
   margin: 0;
   padding: 0;
+}
+
+.user-navbar{
+  background-color: #3aa832;
+}
+
+.pharma-navbar{
+  background-color: #4580ff;
 }
 
 .navbar li{
@@ -38,9 +45,11 @@ code {
   background-color: #dedede;
   margin: 20px 10px;
   padding-left:  5px;
+  font-size: 16px;
 }
 
 .order {
+  font-size: 16px;
   border-left: 6px solid black;
   background-color: #dedede;
   margin: 20px 10px;
@@ -48,8 +57,112 @@ code {
 }
 
 .cart-item{
+  font-size: 16px;
   border-left: 6px solid blue;
   background-color: #dedede;
   margin: 20px 10px;
   padding-left:  5px;
+}
+
+.form-control{
+  text-align: left;
+}
+
+.btn{
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.btn-block{
+  display: block;
+  width: 100%;
+}
+
+.product-btn{
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+/*
+.login{
+  display: block;
+  width: 50%;
+  text-align: center;
+}
+*/
+
+.login{
+  margin: 50px auto;
+  border: 3px solid green;
+  border-radius: 5px;
+  width: 60%;
+}
+
+.login-form{
+  padding-left: 10px;
+  font-size: 20px;
+  margin:  auto;
+  text-align: center;
+}
+
+.login-form div{
+  
+}
+
+/*.login-btn{
+  margin: auto;
+}*/
+
+.login-form label{
+  display:  block;
+}
+
+.login-form input{
+  width: 90%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px;
+}
+
+.login-form select{
+  width: 90%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px; 
+}
+
+.cart-total{
+  text-align: left;
+  padding-left: 20px;
+}
+
+.cart-total h2{
+  display:  inline;
+}
+
+.floating-div {
+  position: absolute;
+  top: 50px;
+  left: 200px;
+  z-index: 10;
 }
