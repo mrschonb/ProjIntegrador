@@ -121,17 +121,17 @@ exports.createOrder = functions.https.onRequest(async (req, res)=>{
 		"content": ["Tylenol"],
 		"total": 12.5
     */
-    const id = Number(req.query.id);
-    const user = Number(req.query.user);
-    const pharmacy = Number(req.query.pharmacy);
-    const order_datetime =new Date();
-    const sent_datetime=new Date(order_datetime.getTime() + 7200000)
-    const status=req.query.status;
-    const content= req.query.content;
-    const total = req.query.total;
+    const id = Number(req.body.id);
+    const user = Number(req.body.user);
+    const pharmacy = Number(req.body.pharmacy);
+    const order_datetime = admin.firestore.Timestamp.now();
+    const sent_datetime = admin.firestore.Timestamp.now();
+    const status=req.body.status;
+    const content= req.body.content;
+    const total = req.body.total;
 
     //conecta con la coleccion 'order'
-    const userRef = db.collection('order');
+    const userRef = db.collection('orders');
     //busca si existe algun doc con el id  recibido
     const queryRefU = await userRef.where('id', '==', id).get();
 
@@ -156,32 +156,34 @@ exports.createOrder = functions.https.onRequest(async (req, res)=>{
     }
 });
 
-exports.updateOrder = functions.https.onRequest(async(req, res)=>{
-    //recibe la order id 
-    const id = Number(req.query.id);
+// exports.updateOrder = functions.https.onRequest(async(req, res)=>{
+//     //recibe la order id 
+//     const id = Number(req.query.id);
 
-    //conecta con la coleccion 
-    const userRef = db.collection('order');
-    //busca el doc que coincide con el libro_id
-    const snapshot = await userRef.where('id', '==', id).get()
+//     //conecta con la coleccion 
+//     const userRef = db.collection('order');
+//     //busca el doc que coincide con el libro_id
+//     const snapshot = await userRef.where('id', '==', id).get()
 
-    if (snapshot.empty) {
-        //si ningun libro coincide manda mensaje de error
-        res.set('Access-Control-Allow-Origin', '*');
-        return res.json({result: `Ningúna orden coincide con el ID.`});
-      }
-        snapshot.forEach(doc => {
-        //modifica el status de la orden segun el status recibido
-        doc.ref.update({
-            status: "sent",
-            sent_datetime=new Date()
-        });
-      });
-      //devuelve mensaje de exito
-      res.set('Access-Control-Allow-Origin', '*');
-      return res.json({result: `El id ha sido modificado.`});
+//     if (snapshot.empty) {
+//         //si ningun libro coincide manda mensaje de error
+//         res.set('Access-Control-Allow-Origin', '*');
+//         return res.json({result: `Ningúna orden coincide con el ID.`});
+//       }
+//         const dt = admin.firestore.Timestamp.now();
+//         snapshot.forEach(doc => {
+//         //modifica el status de la orden segun el status recibido
+//         doc.ref.update({
+//             status: "sent",
+//             sent_datetime=dt
 
-});
+//         });
+//       });
+//       //devuelve mensaje de exito
+//       res.set('Access-Control-Allow-Origin', '*');
+//       return res.json({result: `El id ha sido modificado.`});
+
+// });
 
 
 
