@@ -174,7 +174,7 @@ exports.updateOrder = functions.https.onRequest(async(req, res)=>{
         //modifica el status de la orden segun el status recibido
         doc.ref.update({
             status: "sent",
-            sent_datetime=new Date()
+            sent_datetime : new Date()
         });
       });
       //devuelve mensaje de exito
@@ -201,6 +201,36 @@ exports.getProductsByWarehouse = functions.https.onRequest(async(req, res)=>{
         data[doc.id] = doc.data();
     })
     res.json(data);
+});
+
+exports.createUser = functions.https.onRequest(async (req, res) => {
+    const id = req.query.id;
+    const name = req.query.name;
+    const email = req.query.email;
+    const city = req.query.city;
+    const area = req.query.area;
+    const type = req.query.type;
+    const address = req.query.type;
+
+    const userRef = db.collection('order');
+    const queryRefU = await userRef.where('id', '==', id).get();
+
+    if(queryRefU.empty){
+        const writeResult = await userRef.doc().set({
+            id: id,
+            name: name,
+            email: email,
+            city: city,
+            area: area,
+            type: type,
+            address: address
+        });
+        res.set('Access-Control-Allow-Origin', '*');
+        return res.json({result: `User with ID: ${id} added.`});
+    }else{
+        res.set('Access-Control-Allow-Origin', '*');
+        return res.json({result: "Id already exists"});
+    }
 });
 
 exports.app=functions.https.onRequest(app);

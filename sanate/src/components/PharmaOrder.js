@@ -19,7 +19,7 @@ const PharmaOrder = ({order_id, date, price, status, items, onUpdate}) => {
 			</table>
 			<p>Total: ${price}</p>
 			<p>Status: {status}</p>
-			{status === "pending" ? <button className='btn' onClick={updateStatus}>Mark as Sent</button> : <> </>}
+			{status === "Pending" ? <button className='btn' onClick={updateStatus}>Mark as Sent</button> : <> </>}
 		</div>
 	)
 }

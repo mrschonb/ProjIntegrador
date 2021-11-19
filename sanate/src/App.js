@@ -6,6 +6,7 @@ import OrderList from './components/OrderList';
 import Cart from './components/Cart';
 import Login from './components/Login';
 import Inventory from './components/Inventory';
+import Register from './components/Register';
 import { useState } from 'react';
 
 
@@ -28,7 +29,7 @@ function App() {
         {item_id: 2, item_name: "Tetracin", item_price: 118.53}
       ],
       price: 22222,
-      status: "delivered"
+      status: "Delivered"
     },
     {
       id: 2,
@@ -38,7 +39,7 @@ function App() {
         {item_id: 1, item_name: "Capriflex", item_price: 384.37},
       ],
       price: 1.26,
-      status: "pending"
+      status: "Pending"
     },
     {
       id: 3,
@@ -47,9 +48,20 @@ function App() {
         {item_id: 0, item_name: "Tetracin", item_price: 118.53}
       ],
       price: 10000000.2,
-      status: "sent"
+      status: "Sent"
     },
   ]);
+
+  // {
+  //   "id": 1,
+  //   "user": 10,
+  //   "pharmacy": 1,
+  //   "order_datetime": "2021-10-26T16:26:00",
+  //   "sent_datetime": "",
+  //   "status": "waiting",
+  //   "content": ["Tylenol"],
+  //   "total": 12.5
+  // }
 
   const [products, setProducts] = useState([
     {
@@ -143,11 +155,21 @@ function App() {
     }
   ]);
 
+  // {
+  //   "id": "volutpat.nunc@tellusfaucibusleo.edu",
+  // "name": "Jeanette Rich",
+  // "email": "volutpat.nunc@tellusfaucibusleo.edu",
+  //   "city": "Monterrey",
+  //   "area": "Centro",
+  //   "type": "Customer"
+  // }
+
   const default_user = {
     name: "Jeanette Rich",
     email: "volutpat.nunc@tellusfaucibusleo.edu",
     city: "Monterrey",
     area: "Centro",
+    address: "Avenue A",
     type: "Customer"
   };
 
@@ -156,6 +178,7 @@ function App() {
     email: "sed@tellus.net",
     city: "Mexico City",
     area: "Santa Fe",
+    address: "",
     type: "Pharmacist"
   };
 
@@ -196,6 +219,10 @@ function App() {
         setViewMode("restock");
         setTitleText("Manage Inventory");
       break;
+      case "userprefs":
+        setViewMode("userprefs");
+        setTitleText("Edit profile settings");
+        break;
       default:
         setViewMode("products");
         setTitleText("Browse Products");
@@ -215,6 +242,11 @@ function App() {
 
     // console.log(default_user);
     // console.log(user);
+  }
+
+  const logUserOut = () => {
+    console.log("LOG OUT");
+    setUser({});
   }
 
   const registerUser = (usr) => {
@@ -248,23 +280,30 @@ function App() {
     setOrders([...orders.filter( (order) => order.id !== order_id), edited_order])
   }
 
+  const updateUser = (user_obj) => {
+    setUser(user_obj);
+    alert("Information change successful. ("+user_obj+")");
+  }
+
   if(user.type==="Customer"){
     return (
       <>
-        <Navbar changeView={switchViewMode} user={user}/>
+        <Navbar changeView={switchViewMode} user={user} onLogout={logUserOut}/>
         <Title text={title_text} />
         {view_mode === "products" ? <ProductList products={products} onAdd={addToCart} cartCounter={countProductInCart}/> : <></>}
         {view_mode === "orders" ? <OrderList orders={orders} mode={user.type}/> : <></>}
         {view_mode === "cart" ? <Cart items={cart} onRemove={removeFromCart} onCheckout={cartCheckout}/> : <></>}
+        {view_mode === "userprefs" ? <Register user={user} onUpdate={updateUser} pharmacies={pharmacies} onLogout={logUserOut} /> : <></>}
       </>
     );
   }else if(user.type === "Pharmacist"){
     return (
       <>
-        <Navbar changeView={switchViewMode} user={user}/>
+        <Navbar changeView={switchViewMode} user={user} onLogout={logUserOut}/>
         <Title text={title_text} />
         {view_mode === "restock" ? <Inventory products={products} onRestock={restockItem}/> : <></>}
         {view_mode === "orders" ? <OrderList orders={orders} mode={user.type} onUpdate={updateOrderStatus}/> : <></>}
+        {view_mode === "userprefs" ? <Register user={user} onUpdate={updateUser} pharmacies={pharmacies} onLogout={logUserOut} /> : <></>}
       </>
     );
   }else{

@@ -116,6 +116,11 @@ code {
   width: 60%;
 }
 
+.login img{
+  display: block;
+  margin: auto;
+}
+
 .login-form{
   padding-left: 10px;
   font-size: 20px;
