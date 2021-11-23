@@ -9,8 +9,13 @@ admin.initializeApp();
 const db = admin.firestore();
 
 //modulo express para que este script pueda responder cosas a los usuarios
-const express = require('express')
-const app= express()
+const express = require('express');
+const app= express();
+
+//For cross-origin requests
+const cors = require('cors');
+
+app.use(cors({ origin: true }));
 
 //funcion para comprobar la conexion
 app.get('/hello-world', (req, res)=>{
@@ -29,6 +34,8 @@ Check and retrieve data on a specific user using their Email as their ID
   }
 */
 exports.getUser = functions.https.onRequest(async (req, res)=>{
+    res.set('Access-Control-Allow-Origin', '*');
+    
     const email = req.query.email;
     const userRef = db.collection('users').doc(email);
     const doc = await userRef.get();
@@ -210,10 +217,13 @@ exports.createUser = functions.https.onRequest(async (req, res) => {
     const city = req.query.city;
     const area = req.query.area;
     const type = req.query.type;
-    const address = req.query.type;
+    const address = req.query.address;
+    const password = req.query.password;
 
-    const userRef = db.collection('order');
+    const userRef = db.collection('users');
     const queryRefU = await userRef.where('id', '==', id).get();
+
+    res.set('Access-Control-Allow-Origin', '*');
 
     if(queryRefU.empty){
         const writeResult = await userRef.doc().set({
@@ -223,12 +233,11 @@ exports.createUser = functions.https.onRequest(async (req, res) => {
             city: city,
             area: area,
             type: type,
-            address: address
+            address: address,
+            password: password
         });
-        res.set('Access-Control-Allow-Origin', '*');
         return res.json({result: `User with ID: ${id} added.`});
     }else{
-        res.set('Access-Control-Allow-Origin', '*');
         return res.json({result: "Id already exists"});
     }
 });
