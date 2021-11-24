@@ -2,9 +2,9 @@ import InventoryItem from './InventoryItem';
 
 const Inventory = ({products, onRestock}) => {
 	return (
-		<>
-			{products.map( (product) => <InventoryItem key={product.id} onRestock={onRestock} productInfo={product}/>)}
-		</>
+		<div className="inventory-container container">
+			{products.map( (product, index) => <InventoryItem key={index} listIndex={index} onRestock={onRestock} productInfo={product}/>)}
+		</div>
 	)
 }
 

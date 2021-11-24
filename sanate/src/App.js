@@ -1,4 +1,5 @@
 import './App.css';
+import sanate_logo from './media/sanate_logo.png';
 import Navbar from './components/Navbar';
 import Title from './components/Title';
 import ProductList from './components/ProductList';
@@ -24,9 +25,9 @@ function App() {
       id: 1,
       date: "Today",
       items: [
-        {item_id: 0, item_name: "Capriflex", item_price: 384.37},
-        {item_id: 1, item_name: "Zanderprofen", item_price: 314.90},
-        {item_id: 2, item_name: "Tetracin", item_price: 118.53}
+        "Capriflex", 
+        "Zanderprofen", 
+        "Tetracin",
       ],
       price: 22222,
       status: "Delivered"
@@ -35,8 +36,8 @@ function App() {
       id: 2,
       date: "Yesterday",
       items: [
-        {item_id: 0, item_name: "Tetracin", item_price: 118.53},
-        {item_id: 1, item_name: "Capriflex", item_price: 384.37},
+        "Tetracin", 
+        "Capriflex", 
       ],
       price: 1.26,
       status: "Pending"
@@ -45,7 +46,7 @@ function App() {
       id: 3,
       date: "Tomorrow",
       items: [
-        {item_id: 0, item_name: "Tetracin", item_price: 118.53}
+        "Tetracin",
       ],
       price: 10000000.2,
       status: "Sent"
@@ -69,35 +70,40 @@ function App() {
       name: "Capriflex",
       brand: "Pfizer",
       price: 384.37,
-      stock: 42
+      stock: 42,
+      warehouse_stock: 200
     },
     {
       id: 2,
       name: "Zandertren",
       brand: "Pfizer",
       price: 1.06,
-      stock: 55
+      stock: 55,
+      warehouse_stock: 250
     },
     {
       id: 3,
       name: "Zanderprofen",
       brand: "Astra Zeneca",
       price: 314.90,
-      stock: 23
+      stock: 23,
+      warehouse_stock: 300
     },
     {
       id: 4,
       name: "Tetraflex",
       brand: "Johnson and Johnson",
       price: 40.62,
-      stock: 6
+      stock: 6,
+      warehouse_stock: 150
     },
     {
       id: 5,
       name: "Tetracin",
       brand: "Pfizer",
       price: 118.53,
-      stock: 101
+      stock: 101,
+      warehouse_stock: 230
     }
   ]);
 
@@ -155,25 +161,18 @@ function App() {
     }
   ]);
 
-  // {
-  //   "id": "volutpat.nunc@tellusfaucibusleo.edu",
-  // "name": "Jeanette Rich",
-  // "email": "volutpat.nunc@tellusfaucibusleo.edu",
-  //   "city": "Monterrey",
-  //   "area": "Centro",
-  //   "type": "Customer"
-  // }
-
   const default_user = {
+    id: "volutpat.nunc@tellusfaucibusleo.edu",
     name: "Jeanette Rich",
     email: "volutpat.nunc@tellusfaucibusleo.edu",
     city: "Monterrey",
     area: "Centro",
     address: "Avenue A",
-    type: "Customer"
+    type: "Customer",
   };
 
   const default_pharmacist = {
+    id: "sed@tellus.net",
     name: "Mira Mathis",
     email: "sed@tellus.net",
     city: "Mexico City",
@@ -182,17 +181,36 @@ function App() {
     type: "Pharmacist"
   };
 
-  const addToCart = (item) => {
-    //console.log(item);
-    //const new_item = {id: cart.length, ...item};
-    //console.log(new_item);
-    //console.log(typeof(cart));
-    setCart([...cart, item]);
-    //console.log(cart);
+  // REST FUNCTIONS
+  const api_server = "http://localhost:5001/proj-integrador-1/us-central1/"
+
+  const apiCreateUser = async (user_data) => {
+    const endpoint = `${api_server}createUser?id=${user_data.id}&name=${user_data.name}&email=${user_data.email}&city=${user_data.city}&area=${user_data.area}&type=${user_data.type}&address=${user_data.address}&password=${user_data.password}`;
+    // const endpoint = "http://localhost:5001/proj-integrador-1/us-central1/createUser?id=dum%40massavestibulum.edu&name=Nyssa+Young&email=dictaaaaum%40massavestibulum.edu&city=Monterrey&area=Guadalupe&type=Pharmacist&address=ADDRESS1&password=jack"
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      // mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+    const data = await res.json();
+    console.log(data);
   }
 
-  const removeFromCart = (item_name) => {
-    setCart(cart.filter(product => product.name !== item_name));
+  // INTERNAL FUNCTIONS
+
+  const addToCart = (item) => {
+    //console.log(item);
+    setCart([...cart, item]);
+  }
+
+  const removeFromCart = (item_index) => {
+    // setCart(cart.splice(item_index, 1));
+
+    setCart(cart.filter((item, index) => index !== item_index));
+
+    // setCart(cart.filter(product => product.name !== item_name));
     //console.log(item_name);
     //console.log(cart);
   }
@@ -231,32 +249,38 @@ function App() {
   }
 
   const logUserIn = (username) => {
-    console.log("LOG IN: "+username);
+    //console.log("LOG IN: "+username);
     // console.log(e);
     if(username === "pharma"){
       setUser(default_pharmacist);
       switchViewMode("restock");
     }else{
       setUser(default_user);
+      setViewMode("products");
     }
+    setShowRegister(false);
 
     // console.log(default_user);
     // console.log(user);
   }
 
   const logUserOut = () => {
-    console.log("LOG OUT");
+    //console.log("LOG OUT");
     setUser({});
   }
 
   const registerUser = (usr) => {
     // e.preventDefault();
-    console.log("Register");
+    
+    // apiCreateUser(usr);
+
     console.log(usr);
+    //setShowRegister(false);
   }
 
   const countProductInCart = (prod_id) => {
     return cart.filter((product) => product.name === prod_id).length;
+    // return cart.filter((product) => product === prod_id).length;
   }
 
   const cartCheckout = (new_order) => {
@@ -265,13 +289,31 @@ function App() {
     return 1;
   }
 
-  const restockItem = (item_id, restock_ammount) => {
+  const restockItem = (item_id, index, restock_ammount) => {
     //update stock in DB
-    
-    let edited_product = products.filter( (product) => product.id === item_id )[0];
-    //console.log(edited_product);
-    edited_product.stock = Number(restock_ammount)+edited_product.stock;
-    setProducts([...products.filter( (product) => product.name !== item_id), edited_product]);
+
+    // console.log(index);
+    // console.log(products[index]);
+    let edited_product = products[index];
+    edited_product.stock += Number(restock_ammount);
+    edited_product.warehouse_stock -= Number(restock_ammount);
+    // console.log(edited_product);
+    setProducts(products.map((product, i) => {
+      if(i === index){
+        return edited_product;
+      }else{
+        return product;
+      }
+    }));
+
+    // products[index].stock += Number(restock_ammount);
+    // products[index].warehouse_stock -= restock_ammount;
+
+    // let edited_product = products.filter( (product) => product.id === item_id )[0];
+    // //console.log(edited_product);
+    // edited_product.stock = Number(restock_ammount)+edited_product.stock;
+    // edited_product.warehouse_stock = edited_product.warehouse_stock - Number(restock_ammount);
+    // setProducts([...products.filter( (product) => product.id !== item_id), edited_product]);
   }
 
   const updateOrderStatus = (order_id, new_status) => {
@@ -309,7 +351,7 @@ function App() {
   }else{
     return(
       <>
-        <Login pharmacies={pharmacies} onRegister={registerUser} onLogin={logUserIn} showRegister={show_register} setShowRegister={setShowRegister} />
+        <Login logo={sanate_logo} pharmacies={pharmacies} onRegister={registerUser} onLogin={logUserIn} showRegister={show_register} setShowRegister={setShowRegister} />
       </>
     );
   }

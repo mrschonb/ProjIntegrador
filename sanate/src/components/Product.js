@@ -21,10 +21,10 @@ const Product = ({ productInfo, onAdd, cartCounter}) => {
 	// }
 
 	return (
-		<div className="product">
+		<div className="product item">
 			<p>Product name: {productInfo.name}</p>
 			<p>Brand: {productInfo.brand}</p>
-			<p>Price: ${productInfo.price}</p>
+			<p>Price: ${productInfo.price.toFixed(2)}</p>
 			<button className="product-btn" onClick={() => onAdd(productInfo)}>Add to cart</button>
 			<p>{cartCounter(productInfo.name)} currently in cart</p>
 		</div>

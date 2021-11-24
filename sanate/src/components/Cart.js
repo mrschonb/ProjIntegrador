@@ -5,20 +5,41 @@ const Cart = ({items, onRemove, onCheckout}) => {
 
 	const cartCheckout = (e) => {
 		e.preventDefault();
-		const new_order_items = items.map((item) => {return {
-			item_id: item.id,
-			item_name: item.name,
-			item_price: item.price
-		};})
+		// const new_order_items = ["a","b","c"];
+		// const today = new Date();
+		// const result = onCheckout({
+		// 	date: today.toDateString(),
+		// 	items: new_order_items,
+		// 	status: "Pending",
+		// 	price: 200
+		// });
 
+		// const new_order_items = items.map((item) => {return {
+		// 	item_id: item.id,
+		// 	item_name: item.name,
+		// 	item_price: item.price
+		// };})
+
+		// const today = new Date();
+
+		// const result = onCheckout({
+		// 	date: today.toDateString(),
+		// 	items: new_order_items,
+		// 	status: "Pending",
+		// 	price: items.reduce((total, item) => total + item.price, 0)
+		// });
+
+		
 		const today = new Date();
-
 		const result = onCheckout({
 			date: today.toDateString(),
-			items: new_order_items,
+			items: items.map((item) => item.name),
 			status: "Pending",
 			price: items.reduce((total, item) => total + item.price, 0)
 		});
+
+		console.log(items);
+
 
 		if(result===1){
 			alert("Order created!");
@@ -31,11 +52,11 @@ const Cart = ({items, onRemove, onCheckout}) => {
 		return (
 			<>
 
-				{items.map((item) => (
-					<CartItem key={item.id} name={item.name} brand={item.brand} price={item.price} onRemove={onRemove}/>
+				{items.map((item, index) => (
+					<CartItem key={index} name={item.name} brand={item.brand} price={item.price} onRemove={onRemove} arrPos={index}/>
 				))}
 				<div className="cart-total">
-					<h2>Total: ${items.reduce((total, item) => total + item.price, 0)}</h2> <button onClick={cartCheckout} className='btn'>Check-out</button>
+					<h2>Total: ${items.reduce((total, item) => total + item.price, 0).toFixed(2)}</h2> <button onClick={cartCheckout} className='btn'>Check-out</button>
 				</div>
 			</>
 		)

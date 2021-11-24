@@ -48,6 +48,10 @@ code {
   font-size: 16px;
 }
 
+.inventory-product{
+  border-left:  6px solid #4580ff;
+}
+
 .order {
   font-size: 16px;
   border-left: 6px solid black;
@@ -99,6 +103,11 @@ code {
   text-decoration: none;
   font-size: 12px;
   font-family: inherit;
+}
+
+.disabled{
+  background:  #888;
+  cursor: not-allowed;
 }
 
 /*
@@ -170,4 +179,27 @@ code {
   top: 50px;
   left: 200px;
   z-index: 10;
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 230px);
+  grid-row-gap: .5em;
+  grid-column-gap: 0.5em;
+}
+
+.order-container{
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, 300px);
+}
+
+.inventory-container{
+  grid-template-rows: repeat(auto-fill, 310px);
+}
+
+.container .item {
+  height: 100%;
+  width: 90%;
 }

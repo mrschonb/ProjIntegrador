@@ -4,7 +4,7 @@ import { useState } from 'react';
 // https://drive.google.com/file/d/1HPzycgM_W_SvcOCjKgS2wT6Zwq8Ft6qz/view?usp=sharing
 
 
-const Login = ({ onRegister, onLogin, setShowRegister, showRegister, pharmacies }) => {
+const Login = ({ logo, onRegister, onLogin, setShowRegister, showRegister, pharmacies }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,7 +15,7 @@ const Login = ({ onRegister, onLogin, setShowRegister, showRegister, pharmacies 
 
 	return (
 		<div className='login'>
-    <img src="https://drive.google.com/uc?id=1HPzycgM_W_SvcOCjKgS2wT6Zwq8Ft6qz" width="300" alt="Sanate logo"/>
+    <img src={logo} width="300" alt="Sanate logo"/>
 		<form className="login-form" onSubmit={logUserIn}>
       <div className='form-control'>
         <label htmlFor='loginEmail'>E-mail</label>
@@ -34,5 +34,7 @@ const Login = ({ onRegister, onLogin, setShowRegister, showRegister, pharmacies 
     </div>
 	)
 }
+
+//<img src="https://drive.google.com/uc?id=1HPzycgM_W_SvcOCjKgS2wT6Zwq8Ft6qz" width="300" alt="Sanate logo"/>
 
 export default Login

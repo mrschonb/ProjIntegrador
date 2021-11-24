@@ -1,10 +1,10 @@
-const CartItem = ({ name, brand, price, onAdd, onRemove }) => {
+const CartItem = ({ name, brand, price, onAdd, onRemove, arrPos }) => {
 	return (
 		<div className="cart-item">
 			<p>Product name: {name}</p>
 			<p>Brand: {brand}</p>
-			<p>Price: ${price}</p>
-			<button className="product-btn" onClick={()=> onRemove(name) }>Remove from cart</button>
+			<p>Price: ${price.toFixed(2)}</p>
+			<button className="product-btn" onClick={()=> onRemove(arrPos) }>Remove from cart</button>
 		</div>
 	)
 }
