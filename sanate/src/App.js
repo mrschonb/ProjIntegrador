@@ -20,35 +20,36 @@ function App() {
   const [view_mode, setViewMode] = useState("products");
   const [title_text, setTitleText] = useState("Browse Products");
   const [cart, setCart] = useState([]);
+  const [new_user, setNewUser] = useState({});
   const [orders, setOrders] = useState([
     {
       id: 1,
-      date: "Today",
+      date: "Mon Sep 20 2021",
       items: [
         "Capriflex", 
         "Zanderprofen", 
         "Tetracin",
       ],
-      price: 22222,
+      price: 817.80,
       status: "Delivered"
     },
     {
       id: 2,
-      date: "Yesterday",
+      date: "Fri Oct 19 2021",
       items: [
         "Tetracin", 
         "Capriflex", 
       ],
-      price: 1.26,
+      price: 502.90,
       status: "Pending"
     },
     {
       id: 3,
-      date: "Tomorrow",
+      date: "Wed Nov 24 2021",
       items: [
         "Tetracin",
       ],
-      price: 10000000.2,
+      price: 118.53,
       status: "Sent"
     },
   ]);
@@ -162,9 +163,9 @@ function App() {
   ]);
 
   const default_user = {
-    id: "volutpat.nunc@tellusfaucibusleo.edu",
+    id: "user@mail.com",
     name: "Jeanette Rich",
-    email: "volutpat.nunc@tellusfaucibusleo.edu",
+    email: "user@mail.com",
     city: "Monterrey",
     area: "Centro",
     address: "Avenue A",
@@ -184,18 +185,12 @@ function App() {
   // REST FUNCTIONS
   const api_server = "http://localhost:5001/proj-integrador-1/us-central1/"
 
-  const apiCreateUser = async (user_data) => {
-    const endpoint = `${api_server}createUser?id=${user_data.id}&name=${user_data.name}&email=${user_data.email}&city=${user_data.city}&area=${user_data.area}&type=${user_data.type}&address=${user_data.address}&password=${user_data.password}`;
-    // const endpoint = "http://localhost:5001/proj-integrador-1/us-central1/createUser?id=dum%40massavestibulum.edu&name=Nyssa+Young&email=dictaaaaum%40massavestibulum.edu&city=Monterrey&area=Guadalupe&type=Pharmacist&address=ADDRESS1&password=jack"
-    const res = await fetch(endpoint, {
-      method: 'GET',
-      // mode: 'cors',
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
-    const data = await res.json();
-    console.log(data);
+  
+
+  const test_request = async () => {
+    const endpoint = `${api_server}getAllPharmacies`;
+    const res = await fetch(endpoint).then(response => response.json());
+    console.log(JSON.stringify(res));
   }
 
   // INTERNAL FUNCTIONS

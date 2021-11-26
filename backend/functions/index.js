@@ -13,6 +13,7 @@ const express = require('express');
 const app= express();
 
 //For cross-origin requests
+// const cors = require('cors')({origin: true});
 const cors = require('cors');
 
 app.use(cors({ origin: true }));
@@ -40,12 +41,15 @@ exports.getUser = functions.https.onRequest(async (req, res)=>{
     const userRef = db.collection('users').doc(email);
     const doc = await userRef.get();
 
+    // const userRef = db.collection('users');
+    // const doc = await userRef.where('id', '==', email).get();
+
     //check if user exists
     if(!doc.exists){
-        res.json({res: 'user ' + email + ' does not exist'})
+        res.status(200).json({res: 'user ' + email + ' does not exist'})
     }
     else{
-        res.json(doc.data());
+        res.status(200).json(doc.data());
     }
 });
 
@@ -236,11 +240,90 @@ exports.createUser = functions.https.onRequest(async (req, res) => {
             address: address,
             password: password
         });
-        return res.json({result: `User with ID: ${id} added.`});
+        return res.status(200).json({result: `User with ID: ${id} added.`});
     }else{
-        return res.json({result: "Id already exists"});
+        return res.status(200).json({result: "Id already exists"});
     }
 });
+
+exports.createPharmacy = functions.https.onRequest(async (req, res) => {
+    const id = Number(req.query.id);
+    const city = req.query.city;
+    const area = req.query.area;
+
+    const userRef = db.collection('pharmacies');
+    res.set('Access-Control-Allow-Origin', '*');
+    const writeResult = await userRef.doc().set({
+        id: id,
+        area: area,
+        city: city
+    });
+    return res.status(200).json({result: `Pharmacy ${id} in ${area}, ${city} added.`});
+});
+
+/*
+// ============= No real use for this one =============
+exports.getPharmacy = functions.https.onRequest(async (req, res) => {
+    
+    const id = Number(req.query.id);
+
+    const userRef = db.collection('pharmacies').doc(id);
+    const doc = await userRef.get();
+
+
+    res.set('Access-Control-Allow-Origin', '*');
+
+    if(!doc.exists()){
+        return res.status(200).json({res: 'Pharmacy with ' + id + ' does not exist'})
+    }
+    else{
+        userRef.update(data)
+        return res.status(400).json({res: doc.data()});
+    }
+});
+*/
+
+exports.getAllPharmacies = functions.https.onRequest(async (req, res) =>{
+    
+    // cors(req, res, () => {
+    // });
+    res.set('Access-Control-Allow-Headers', '*');
+    res.set('Access-Control-Allow-Origin', '*');
+
+    
+    db.collection('pharmacies').get().then(querySnapshot => {
+        const documents = querySnapshot.docs.map(doc => doc.data());
+        console.log(JSON.stringify(documents));
+        // return res.status(200).send(JSON.stringify(documents));
+        return res.status(200).json({result: documents});
+        // return res.status(200).json({res: documents}).send();
+    }).catch( () => console.log("FAILED")); 
+    
+
+    
+    /*
+    const documents = await admin.firestore().collection('pharmacies').get().docs;
+    console.log(documents);
+    // return res.status(200).json(documents);
+    return res.status(200).send(JSON.stringify(documents));
+    */
+});
+
+exports.getPharmaciesTest = functions.https.onRequest(async (req, res) => {
+    let all_docs = [];
+    try{
+        const pharmacies = await admin.firestore().collection('pharmacies').get();
+        pharmacies.docs.forEach(doc => {
+            all_docs.push(doc);
+        });
+        return res.status(200).json(all_docs);
+    }catch(error){
+        return res.status(500).json(error.message);
+        //console.log(error);
+    }
+});
+
+
 
 exports.app=functions.https.onRequest(app);
 

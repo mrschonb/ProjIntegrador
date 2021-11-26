@@ -1,9 +1,9 @@
 const UserDisp = ({user}) => {
 
 	return (
-		<div className="user-settings">
+		<div className="">
 		<h5>
-			{"Welcome, "+user.name+"!"}
+			{user.type === "Customer" ? "Edit profile" : ""}
 		</h5>
 		</div>
 	)

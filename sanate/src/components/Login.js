@@ -10,7 +10,14 @@ const Login = ({ logo, onRegister, onLogin, setShowRegister, showRegister, pharm
 
   const logUserIn = (e) => {
     e.preventDefault();
-    onLogin(username);
+    //onLogin(username);
+    if(username === "user@mail.com" && password === "userpass"){
+      onLogin("user");
+    }else if(username === "pharma@mail.com" && password === "pharmapass"){
+      onLogin("pharma");
+    }else{
+      alert("Username does not exist or password is incorrect");
+    }
   }
 
 	return (
